@@ -1,6 +1,7 @@
 package me.wbean.spring.starter.nsq.core;
 
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -27,6 +28,7 @@ import me.wbean.spring.starter.nsq.core.producer.NsqTemplate;
  */
 @Configuration
 @EnableConfigurationProperties(NsqProperties.class)
+@ConditionalOnProperty(prefix = "nsq", name = "host")
 public class NsqAutoConfiguration {
 
     private NsqProperties nsqProperties;
