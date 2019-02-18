@@ -16,5 +16,5 @@ import com.github.brainlag.nsq.NSQMessage;
  */
 public interface NsqRequeuePolicy {
 
-  boolean requeue(NSQConsumer consumer, NSQMessage nsqMessage);
+  boolean requeue(NSQConsumer consumer, NSQMessage nsqMessage, Throwable throwable);
 }

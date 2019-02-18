@@ -1,5 +1,7 @@
 package me.wbean.spring.starter.nsq.core.consumer;
 
+import java.util.concurrent.TimeUnit;
+
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
@@ -32,17 +34,17 @@ public class DefaultNsqRequeuePolicy implements NsqRequeuePolicy {
     private int MAX_REQUEUE_DELAY_SECOND = NsqConstant.MAX_REQUEUE_DELAY;
 
     @Override
-    public boolean requeue(NSQConsumer consumer, NSQMessage nsqMessage) {
+    public boolean requeue(NSQConsumer consumer, NSQMessage nsqMessage, Throwable throwable) {
         int nextConsumingInSecond = (nsqMessage.getAttempts() + 1) * intervalInSecond;
         if (nextConsumingInSecond > MAX_REQUEUE_DELAY_SECOND) {
             nextConsumingInSecond = MAX_REQUEUE_DELAY_SECOND;
         }
         try {
-            nsqMessage.requeue();
+            nsqMessage.requeue(new Long(NsqConstant.TIME_UNIT.toMillis(intervalInSecond)).intValue());
             log.info(String.format("message requeue in %s second, message=%s, attempts=%d", nextConsumingInSecond, new String(nsqMessage.getId()), nsqMessage.getAttempts()));
             return true;
         } catch (Exception e) {
-            log.error(String.format("message requeue exception, message={}, attempts=%d", new String(nsqMessage.getId()), nsqMessage.getAttempts()), e);
+            log.error(String.format("message requeue exception, message=%s, attempts=%d", new String(nsqMessage.getId()), nsqMessage.getAttempts()), e);
         }
         return false;
     }

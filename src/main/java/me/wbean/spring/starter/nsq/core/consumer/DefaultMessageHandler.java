@@ -77,7 +77,7 @@ public class DefaultMessageHandler implements NSQMessageCallback {
             }
 
             if (nsqRequeuePolicy != null){
-                nsqRequeuePolicy.requeue(consumer, message);
+                nsqRequeuePolicy.requeue(consumer, message, e.getCause());
             }
 
             if (e.getCause() instanceof RuntimeException){
