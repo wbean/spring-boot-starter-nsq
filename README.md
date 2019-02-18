@@ -1,5 +1,9 @@
 # spring-boot-starter-nsq
 
+## Install
+download code && mvn install
+
+
 ## Artifcat
 ```xml
 <dependency>
