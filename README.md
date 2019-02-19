@@ -23,10 +23,12 @@ public class NsqTest {
     private NsqTemplate nsqTemplate;
     
     
-    class Order{
+    public static class Order{
         private int id;
         private Long amount;
         private String goodsName;
+        
+        //getter setter
     }
     
     //****** Consumer usage
